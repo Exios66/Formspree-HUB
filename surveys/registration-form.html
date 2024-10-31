@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #fs-frm {
+            max-width: 600px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: #1a365d;
+        }
+
+        .form-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #1a365d, #4299e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        #fs-frm-inputs {
+            border: none;
+            padding: 0;
+        }
+
+        label {
+            display: block;
+            margin: 1.2rem 0 0.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #4299e1;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+            outline: none;
+        }
+
+        .locale {
+            border: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .locale legend {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .locale-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(45deg, #4299e1, #667eea);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 2rem;
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.4);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        input:invalid,
+        select:invalid {
+            border-color: #fc8181;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            #fs-frm {
+                padding: 1.5rem;
+                margin: 1rem;
+                border-radius: 15px;
+            }
+
+            .form-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .locale-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            input[type="submit"] {
+                padding: 1rem;
+            }
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #2f855a;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f0fff4;
+            border-radius: 10px;
+            border: 1px solid #9ae6b4;
+        }
+
+        ::placeholder {
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-header">
+        <h1>Registration Form</h1>
+        <p>Please fill out all required fields</p>
+    </div>
+
+    <form id="fs-frm" name="registration-form" accept-charset="utf-8" action="https://formspree.io/f/{form_id}" method="post">
+        <fieldset id="fs-frm-inputs">
+            <label for="full-name">Full Name</label>
+            <input type="text" name="name" id="full-name" placeholder="First and Last" required>
+
+            <label for="email-address">Email Address</label>
+            <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required>
+
+            <label for="street-address">Street Address</label>
+            <input type="text" name="street" id="street-address" placeholder="Street" required>
+
+            <fieldset class="locale">
+                <legend>Locale</legend>
+                <div class="locale-grid">
+                    <input type="text" name="city" placeholder="City" required>
+                    <select name="state" id="state" aria-label="State" required>
+                        <option value="" selected disabled>State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                    </select>
+                </div>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+</body>
+</html>
