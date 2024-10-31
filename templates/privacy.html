@@ -39,43 +39,46 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Privacy Policy</h1>
-        
-        <div class="section">
-            <h2>Data Collection</h2>
-            <p>We collect the following information when you use our file upload service:</p>
-            <ul>
-                <li>Email addresses for file attribution</li>
-                <li>Uploaded files and associated metadata</li>
-                <li>Usage statistics and access logs</li>
-            </ul>
-        </div>
+    <form method="POST">
+        {{ form.csrf_token }}
+        <div class="container">
+            <h1>Privacy Policy</h1>
+            
+            <div class="section">
+                <h2>Data Collection</h2>
+                <p>We collect the following information when you use our file upload service:</p>
+                <ul>
+                    <li>Email addresses for file attribution</li>
+                    <li>Uploaded files and associated metadata</li>
+                    <li>Usage statistics and access logs</li>
+                </ul>
+            </div>
 
-        <div class="section">
-            <h2>Data Usage</h2>
-            <p>Your data is used exclusively for:</p>
-            <ul>
-                <li>Providing the file upload service</li>
-                <li>Maintaining service security</li>
-                <li>Improving user experience</li>
-            </ul>
-        </div>
+            <div class="section">
+                <h2>Data Usage</h2>
+                <p>Your data is used exclusively for:</p>
+                <ul>
+                    <li>Providing the file upload service</li>
+                    <li>Maintaining service security</li>
+                    <li>Improving user experience</li>
+                </ul>
+            </div>
 
-        <div class="section">
-            <h2>Data Protection</h2>
-            <p>We implement various security measures to protect your data, including:</p>
-            <ul>
-                <li>Encrypted file storage</li>
-                <li>Secure data transmission</li>
-                <li>Regular security audits</li>
-            </ul>
-        </div>
+            <div class="section">
+                <h2>Data Protection</h2>
+                <p>We implement various security measures to protect your data, including:</p>
+                <ul>
+                    <li>Encrypted file storage</li>
+                    <li>Secure data transmission</li>
+                    <li>Regular security audits</li>
+                </ul>
+            </div>
 
-        <div class="section">
-            <h2>Contact Us</h2>
-            <p>For privacy-related inquiries, please contact us at: privacy@example.com</p>
+            <div class="section">
+                <h2>Contact Us</h2>
+                <p>For privacy-related inquiries, please contact us at: privacy@example.com</p>
+            </div>
         </div>
-    </div>
+    </form>
 </body>
 </html> 

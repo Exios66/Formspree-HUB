@@ -40,26 +40,29 @@
 </head>
 <body>
     <div class="container">
-        <h1>Terms of Service</h1>
+        <form method="POST">
+            {{ form.csrf_token }}
+            <h1>Terms of Service</h1>
 
-        <div class="section">
-            <h2>Acceptable Use</h2>
-            <p>By using our service, you agree not to:</p>
-            <ul>
-                <li>Upload malicious or illegal content</li>
-                <li>Violate any intellectual property rights</li>
-                <li>Attempt to breach system security</li>
-                <li>Use the service for spam or harassment</li>
-            </ul>
-        </div>
+            <div class="section">
+                <h2>Acceptable Use</h2>
+                <p>By using our service, you agree not to:</p>
+                <ul>
+                    <li>Upload malicious or illegal content</li>
+                    <li>Violate any intellectual property rights</li>
+                    <li>Attempt to breach system security</li>
+                    <li>Use the service for spam or harassment</li>
+                </ul>
+            </div>
 
-        <div class="section">
-            <h2>File Limitations</h2>
-            <p>The following restrictions apply:</p>
-            <ul>
-                <li>Maximum file size: 5MB</li>
-            </ul>
-        </div>
+            <div class="section">
+                <h2>File Limitations</h2>
+                <p>The following restrictions apply:</p>
+                <ul>
+                    <li>Maximum file size: 5MB</li>
+                </ul>
+            </div>
+        </form>
     </div>
 </body>
-</html> 
+</html>

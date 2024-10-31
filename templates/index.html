@@ -264,7 +264,8 @@
 </head>
 <body>
     <div class="theme-switcher">
-        <form action="https://formspree.io/f/xnnqpjry" method="POST">
+        <form method="POST">
+            {{ form.csrf_token }}
             <button type="button" class="theme-btn" data-theme="light">Light</button>
             <button type="button" class="theme-btn" data-theme="dark">Dark</button>
             <button type="button" class="theme-btn" data-theme="nature">Nature</button>
@@ -274,11 +275,11 @@
     <div class="container">
         <h1>Advanced File Upload</h1>
         <form
-            action="https://formspree.io/f/xnnqpjry"
             method="POST"
             enctype="multipart/form-data"
             id="uploadForm"
         >
+            {{ form.csrf_token }}
             <label>
                 Your email:
                 <input type="email" name="email" required>

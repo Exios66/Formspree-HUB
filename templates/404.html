@@ -6,8 +6,11 @@
     <title>404 - Page Not Found</title>
 </head>
 <body>
-    <h1>404 - Page Not Found</h1>
-    <p>The page you're looking for doesn't exist.</p>
-    <a href="/">Return to Home</a>
+    <form method="POST">
+        {{ form.csrf_token }}
+        <h1>404 - Page Not Found</h1>
+        <p>The page you're looking for doesn't exist.</p>
+        <a href="/">Return to Home</a>
+    </form>
 </body>
-</html> 
+</html>

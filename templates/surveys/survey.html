@@ -191,6 +191,7 @@
         </div>
         
         <form id="fs-frm" name="survey-form" accept-charset="utf-8" action="https://formspree.io/f/{form_id}" method="post">
+            {{ form.csrf_token }}
             <fieldset id="fs-frm-inputs">
                 <!-- Personal Information Section -->
                 <label for="full-name">Full Name</label>

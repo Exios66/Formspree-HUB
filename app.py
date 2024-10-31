@@ -9,7 +9,12 @@ from werkzeug.utils import secure_filename
 import time
 
 # Initialize Flask
+from flask import Flask
+from flask_wtf.csrf import CSRFProtect
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your-secret-key-here'  # Make sure this is set
+csrf = CSRFProtect(app)
 app.config.update(
     SECRET_KEY='your-secret-key-here',  # Change this to a secure secret key
     MAX_CONTENT_LENGTH=5 * 1024 * 1024,  # 5MB max file size

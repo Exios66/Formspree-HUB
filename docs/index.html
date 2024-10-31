@@ -468,6 +468,7 @@
             
             try {
                 const formData = new FormData(form);
+                formData.append('csrf_token', '{{ csrf_token() }}');
                 
                 const response = await fetch('http://localhost:3000/api/upload', {
                     method: 'POST',

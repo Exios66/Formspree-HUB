@@ -59,48 +59,51 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Help Center</h1>
+    <form method="POST">
+        {{ form.csrf_token }}
+        <div class="container">
+            <h1>Help Center</h1>
 
-        <div class="section">
-            <h2>Frequently Asked Questions</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">How do I upload a file?</div>
-                <p>Simply drag and drop your file into the upload area or click to browse your files. Select the file you want to upload and click the "Upload" button.</p>
+            <div class="section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I upload a file?</div>
+                    <p>Simply drag and drop your file into the upload area or click to browse your files. Select the file you want to upload and click the "Upload" button.</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What file types are supported?</div>
+                    <p>We support various file types including images (JPG, PNG, GIF), documents (PDF, DOC, TXT), and archives (ZIP, RAR).</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What is the maximum file size?</div>
+                    <p>The maximum file size limit is 5MB per file.</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How long are files stored?</div>
+                    <p>Files are stored for 30 days from the upload date.</p>
+                </div>
             </div>
 
-            <div class="faq-item">
-                <div class="faq-question">What file types are supported?</div>
-                <p>We support various file types including images (JPG, PNG, GIF), documents (PDF, DOC, TXT), and archives (ZIP, RAR).</p>
+            <div class="section">
+                <h2>Need More Help?</h2>
+                <p>If you can't find the answer you're looking for, please contact our support team:</p>
+                <a href="mailto:support@example.com" class="contact-button">Contact Support</a>
             </div>
 
-            <div class="faq-item">
-                <div class="faq-question">What is the maximum file size?</div>
-                <p>The maximum file size limit is 5MB per file.</p>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">How long are files stored?</div>
-                <p>Files are stored for 30 days from the upload date.</p>
+            <div class="section">
+                <h2>Quick Tips</h2>
+                <ul>
+                    <li>Make sure your file meets the size and type requirements</li>
+                    <li>Check your internet connection if uploads are failing</li>
+                    <li>Keep your browser updated for best performance</li>
+                    <li>Clear your browser cache if you experience issues</li>
+                </ul>
             </div>
         </div>
-
-        <div class="section">
-            <h2>Need More Help?</h2>
-            <p>If you can't find the answer you're looking for, please contact our support team:</p>
-            <a href="mailto:support@example.com" class="contact-button">Contact Support</a>
-        </div>
-
-        <div class="section">
-            <h2>Quick Tips</h2>
-            <ul>
-                <li>Make sure your file meets the size and type requirements</li>
-                <li>Check your internet connection if uploads are failing</li>
-                <li>Keep your browser updated for best performance</li>
-                <li>Clear your browser cache if you experience issues</li>
-            </ul>
-        </div>
-    </div>
+    </form>
 </body>
-</html> 
+</html>
