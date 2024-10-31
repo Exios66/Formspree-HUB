@@ -1,0 +1,257 @@
+:root {
+    --cyber-pink: #ff2a6d;
+    --cyber-blue: #05d9e8;
+    --cyber-purple: #7700ff;
+    --cyber-yellow: #ffd700;
+    --cyber-dark: #1a1a2e;
+    --cyber-darker: #121225;
+    --cyber-text: #dedede;
+    --cyber-glow: 0 0 10px var(--cyber-blue),
+                  0 0 20px var(--cyber-blue),
+                  0 0 30px var(--cyber-blue);
+    --cyber-glow-pink: 0 0 10px var(--cyber-pink),
+                      0 0 20px var(--cyber-pink),
+                      0 0 30px var(--cyber-pink);
+}
+
+body {
+    background: var(--cyber-darker);
+    color: var(--cyber-text);
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-image: 
+        linear-gradient(45deg, rgba(255, 42, 109, 0.1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(5, 217, 232, 0.1) 25%, transparent 25%);
+    background-size: 100px 100px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--cyber-dark);
+    border: 2px solid var(--cyber-blue);
+    box-shadow: var(--cyber-glow);
+    border-radius: 5px;
+}
+
+.github-badges {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 0.5rem 1rem;
+    background: var(--cyber-darker);
+    border: 1px solid var(--cyber-blue);
+    border-radius: 3px;
+    color: var(--cyber-blue);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    box-shadow: var(--cyber-glow);
+    transform: translateY(-2px);
+}
+
+h1, h2, h3 {
+    color: var(--cyber-pink);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow: var(--cyber-glow-pink);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    color: var(--cyber-yellow);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--cyber-darker);
+    border: 1px solid var(--cyber-blue);
+    color: var(--cyber-text);
+    border-radius: 3px;
+    font-family: 'Share Tech Mono', monospace;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    box-shadow: var(--cyber-glow);
+    border-color: var(--cyber-pink);
+}
+
+button {
+    background: var(--cyber-blue);
+    color: var(--cyber-darker);
+    border: none;
+    padding: 1rem 2rem;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    width: 100%;
+    font-weight: bold;
+}
+
+button:hover {
+    background: var(--cyber-pink);
+    box-shadow: var(--cyber-glow-pink);
+    transform: translateY(-2px);
+}
+
+.error {
+    color: var(--cyber-pink);
+    border-left: 3px solid var(--cyber-pink);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+
+.success {
+    color: var(--cyber-blue);
+    border-left: 3px solid var(--cyber-blue);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--cyber-blue);
+    background: var(--cyber-darker);
+    cursor: pointer;
+    position: relative;
+}
+
+.checkbox-group input[type="checkbox"]:checked::before {
+    content: '✓';
+    position: absolute;
+    color: var(--cyber-pink);
+    font-size: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.radio-group {
+    display: flex;
+    gap: 1rem;
+    margin: 0.5rem 0;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--cyber-blue);
+    border-radius: 50%;
+    background: var(--cyber-darker);
+    cursor: pointer;
+    position: relative;
+}
+
+.radio-group input[type="radio"]:checked::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--cyber-pink);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes glitch {
+    0% {
+        text-shadow: 0.05em 0 0 var(--cyber-pink),
+                     -0.05em -0.025em 0 var(--cyber-blue),
+                     -0.025em 0.05em 0 var(--cyber-purple);
+    }
+    14% {
+        text-shadow: 0.05em 0 0 var(--cyber-pink),
+                     -0.05em -0.025em 0 var(--cyber-blue),
+                     -0.025em 0.05em 0 var(--cyber-purple);
+    }
+    15% {
+        text-shadow: -0.05em -0.025em 0 var(--cyber-pink),
+                     0.025em 0.025em 0 var(--cyber-blue),
+                     -0.05em -0.05em 0 var(--cyber-purple);
+    }
+    49% {
+        text-shadow: -0.05em -0.025em 0 var(--cyber-pink),
+                     0.025em 0.025em 0 var(--cyber-blue),
+                     -0.05em -0.05em 0 var(--cyber-purple);
+    }
+    50% {
+        text-shadow: 0.025em 0.05em 0 var(--cyber-pink),
+                     0.05em 0 0 var(--cyber-blue),
+                     0 -0.05em 0 var(--cyber-purple);
+    }
+    99% {
+        text-shadow: 0.025em 0.05em 0 var(--cyber-pink),
+                     0.05em 0 0 var(--cyber-blue),
+                     0 -0.05em 0 var(--cyber-purple);
+    }
+    100% {
+        text-shadow: -0.025em 0 0 var(--cyber-pink),
+                     -0.025em -0.025em 0 var(--cyber-blue),
+                     -0.025em -0.05em 0 var(--cyber-purple);
+    }
+}
+
+.glitch {
+    animation: glitch 1s infinite;
+    font-weight: bold;
+}
