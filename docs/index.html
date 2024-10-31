@@ -506,6 +506,52 @@
                 }, 1000);
             }
         });
+
+        // Function to update file list UI
+        function updateFileListUI(files) {
+            const fileList = document.querySelector('.file-list');
+            if (!fileList) {
+                const list = document.createElement('div');
+                list.className = 'file-list';
+                document.querySelector('.container').appendChild(list);
+            }
+            fileList.innerHTML = '';
+            files.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name}</span>
+                    <span>${formatBytes(file.size)}</span>
+                    <span>${new Date(file.uploadDate).toLocaleDateString()}</span>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
     </script>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <p>Advanced file upload system with real-time analysis and progress tracking.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: support@example.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms of Service</a></li>
+                    <li><a href="/help">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 File Upload System. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
