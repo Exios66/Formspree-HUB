@@ -1,0 +1,18 @@
+/* Same content as before */
+:root {
+    --cyber-pink: #ff2a6d;
+    --cyber-blue: #05d9e8;
+    --cyber-purple: #7700ff;
+    --cyber-yellow: #ffd700;
+    --cyber-dark: #1a1a2e;
+    --cyber-darker: #121225;
+    --cyber-text: #dedede;
+    --cyber-glow: 0 0 10px var(--cyber-blue),
+                  0 0 20px var(--cyber-blue),
+                  0 0 30px var(--cyber-blue);
+    --cyber-glow-pink: 0 0 10px var(--cyber-pink),
+                      0 0 20px var(--cyber-pink),
+                      0 0 30px var(--cyber-pink);
+}
+
+/* Rest of the CSS content remains the same */

@@ -13,7 +13,7 @@ db = SQLAlchemy()
 csrf = CSRFProtect()
 
 def create_app(config_name='default'):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='docs/static', template_folder='docs')
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
@@ -45,10 +45,22 @@ def create_app(config_name='default'):
     @app.route('/')
     def index():
         try:
-            return render_template('index.html')
+            return send_from_directory('docs', 'index.html')
         except Exception as e:
             app.logger.error(f"Error in index route: {str(e)}")
             return str(e), 500
+
+    @app.route('/surveys/<path>')
+    def survey(path):
+        try:
+            return send_from_directory('docs/surveys', path)
+        except Exception as e:
+            app.logger.error(f"Error in survey route: {str(e)}")
+            return "Template not found", 404
+
+    @app.route('/static/<path:filename>')
+    def serve_static(filename):
+        return send_from_directory('docs/static', filename)
 
     @app.route('/upload', methods=['POST'])
     def upload_file():
@@ -98,38 +110,15 @@ def create_app(config_name='default'):
             app.logger.error(f"Error in files route: {str(e)}")
             return jsonify({'error': str(e)}), 500
 
-    # Static Routes
-    @app.route('/privacy')
-    def privacy():
-        return render_template('privacy.html')
-
-    @app.route('/terms')
-    def terms():
-        return render_template('terms.html')
-
-    @app.route('/help')
-    def help():
-        return render_template('help.html')
-
-    # Survey Routes
-    @app.route('/surveys/<path>')
-    def survey(path):
-        try:
-            template_path = f"surveys/{path}"
-            return render_template(template_path)
-        except Exception as e:
-            app.logger.error(f"Error in survey route: {template_path}")
-            return "Template not found", 404
-
     # Error handlers
     @app.errorhandler(404)
     def not_found_error(error):
-        return render_template('404.html'), 404
+        return send_from_directory('docs', '404.html'), 404
 
     @app.errorhandler(500)
     def internal_error(error):
         app.logger.error(f"Internal error: {str(error)}")
-        return render_template('500.html'), 500
+        return send_from_directory('docs', '500.html'), 500
 
     @app.errorhandler(413)
     def too_large(e):

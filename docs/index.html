@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced File Upload System</title>
+    <title>Neural Interface Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Share+Tech+Mono&display=swap">
+    <link rel="stylesheet" href="static/css/cyberpunk.css">
     <style>
+        /* Original theme variables preserved */
         :root {
-            /* Default theme */
             --primary-color: #3498db;
             --primary-dark: #2980b9;
             --background: #f5f5f5;
@@ -39,28 +41,24 @@
             --warning: #FFA000;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        /* Cyberpunk theme overrides */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Share Tech Mono', monospace;
+            background: var(--cyber-darker);
+            color: var(--cyber-text);
             line-height: 1.6;
-            color: var(--text);
-            background-color: var(--background);
             padding: 20px;
             transition: all 0.3s ease;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
-            background-color: var(--surface);
+            background: var(--cyber-dark);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 2px solid var(--cyber-blue);
+            box-shadow: var(--cyber-glow);
         }
 
         .theme-switcher {
@@ -73,135 +71,160 @@
 
         .theme-btn {
             padding: 8px 16px;
-            border: none;
+            border: 1px solid var(--cyber-blue);
+            background: var(--cyber-darker);
+            color: var(--cyber-text);
             border-radius: 20px;
             cursor: pointer;
             font-size: 14px;
-            transition: transform 0.2s ease;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
         }
 
         .theme-btn:hover {
             transform: scale(1.05);
+            box-shadow: var(--cyber-glow);
         }
 
         h1 {
+            font-family: 'Orbitron', sans-serif;
             text-align: center;
             margin-bottom: 30px;
-            color: var(--text);
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        label {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        input[type="email"] {
-            padding: 12px;
-            border: 2px solid var(--primary-color);
-            border-radius: 8px;
-            font-size: 16px;
-            background: var(--surface);
-            color: var(--text);
-            transition: all 0.3s ease;
+            color: var(--cyber-pink);
+            text-shadow: var(--cyber-glow-pink);
         }
 
         .file-upload-container {
             position: relative;
-            border: 2px dashed var(--primary-color);
+            border: 2px dashed var(--cyber-blue);
             border-radius: 8px;
             padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
+            background: var(--cyber-darker);
         }
 
         .file-upload-container.drag-over {
-            background-color: rgba(52, 152, 219, 0.1);
-            border-color: var(--primary-dark);
-        }
-
-        .file-input {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            cursor: pointer;
+            box-shadow: var(--cyber-glow);
         }
 
         .upload-icon {
             font-size: 40px;
-            color: var(--primary-color);
+            color: var(--cyber-blue);
             margin-bottom: 10px;
+            text-shadow: var(--cyber-glow);
         }
 
-        .file-info {
-            margin-top: 10px;
-            font-size: 14px;
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--cyber-blue);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--cyber-darker);
+            color: var(--cyber-text);
+            font-family: 'Share Tech Mono', monospace;
+            margin-bottom: 1rem;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            box-shadow: var(--cyber-glow);
         }
 
         button {
-            background-color: var(--primary-color);
-            color: white;
+            background: var(--cyber-blue);
+            color: var(--cyber-darker);
             padding: 12px;
             border: none;
             border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             position: relative;
             overflow: hidden;
         }
 
         button:hover {
-            background-color: var(--primary-dark);
+            background: var(--cyber-pink);
+            box-shadow: var(--cyber-glow-pink);
         }
 
-        button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
+        .template-nav {
+            margin-top: 3rem;
         }
 
-        .loading-spinner {
-            display: none;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s linear infinite;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        @keyframes spin {
-            to {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
+        .nav-card {
+            background: var(--cyber-darker);
+            border: 1px solid var(--cyber-blue);
+            padding: 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: var(--cyber-text);
+            transition: all 0.3s ease;
         }
 
-        .progress-container {
-            display: none;
-            margin-top: 20px;
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--cyber-glow);
         }
 
-        .progress-bar {
-            height: 6px;
-            background-color: var(--primary-color);
-            width: 0%;
-            border-radius: 3px;
-            transition: width 0.3s ease;
+        .nav-card h3 {
+            color: var(--cyber-pink);
+            margin-bottom: 0.5rem;
+            text-shadow: var(--cyber-glow-pink);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--cyber-darker);
+            margin-top: 3rem;
+            border-top: 1px solid var(--cyber-blue);
+        }
+
+        .footer-section h3 {
+            color: var(--cyber-pink);
+            margin-bottom: 1rem;
+            text-shadow: var(--cyber-glow-pink);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section a {
+            color: var(--cyber-text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--cyber-blue);
+            text-shadow: var(--cyber-glow);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1rem;
+            background: var(--cyber-darker);
+            border-top: 1px solid var(--cyber-blue);
+            color: var(--cyber-text);
         }
 
         .notification {
@@ -210,69 +233,38 @@
             right: 20px;
             padding: 15px 25px;
             border-radius: 8px;
-            color: white;
+            color: var(--cyber-text);
             transform: translateX(120%);
             transition: transform 0.3s ease;
             z-index: 1000;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.success {
-            background-color: var(--success);
-        }
-
-        .notification.error {
-            background-color: var(--error);
-        }
-
-        .notification.warning {
-            background-color: var(--warning);
-        }
-
-        .file-analysis {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: rgba(52, 152, 219, 0.1);
-            display: none;
-        }
-
-        .analysis-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-                margin: 20px auto;
-            }
-
-            .theme-switcher {
-                position: relative;
-                top: 0;
-                right: 0;
-                justify-content: center;
-                margin-bottom: 20px;
-            }
+            background: var(--cyber-darker);
+            border: 1px solid var(--cyber-blue);
+            box-shadow: var(--cyber-glow);
         }
     </style>
 </head>
 <body>
     <div class="theme-switcher">
-        <form action="https://formspree.io/f/xnnqpjry" method="POST">
-            <button type="button" class="theme-btn" data-theme="light">Light</button>
-            <button type="button" class="theme-btn" data-theme="dark">Dark</button>
-            <button type="button" class="theme-btn" data-theme="nature">Nature</button>
-        </form>
+        <button type="button" class="theme-btn" data-theme="light">Light</button>
+        <button type="button" class="theme-btn" data-theme="dark">Dark</button>
+        <button type="button" class="theme-btn" data-theme="nature">Nature</button>
     </div>
 
     <div class="container">
-        <h1>Advanced File Upload</h1>
+        <h1 class="glitch">Neural Interface Hub</h1>
+        
+        <div class="github-badges">
+            <a href="#" class="badge">
+                <img src="https://img.shields.io/badge/neural--link-active-success.svg" alt="Status">
+            </a>
+            <a href="#" class="badge">
+                <img src="https://img.shields.io/badge/encryption-enabled-blue.svg" alt="Security">
+            </a>
+            <a href="#" class="badge">
+                <img src="https://img.shields.io/badge/system-online-yellow.svg" alt="System">
+            </a>
+        </div>
+
         <form
             action="https://formspree.io/f/xnnqpjry"
             method="POST"
@@ -280,25 +272,25 @@
             id="uploadForm"
         >
             <label>
-                Your email:
+                Neural ID (Email):
                 <input type="email" name="email" required>
             </label>
             
             <div class="file-upload-container">
-                <div class="upload-icon" aria-hidden="true">📁</div>
-                <p>Drag & Drop your file here or click to browse</p>
-                <label for="file-upload" class="sr-only">Choose a file to upload</label>
-                <input type="file" name="upload" id="file-upload" class="file-input" required>
+                <div class="upload-icon" aria-hidden="true">📡</div>
+                <p>Initialize Neural Upload</p>
+                <p>Drag & Drop data packet or click to browse</p>
+                <input type="file" name="upload" id="file-upload" class="file-input" aria-label="File upload" required>
                 <div class="file-info" aria-live="polite"></div>
             </div>
 
             <div class="file-analysis">
-                <h3>File Analysis</h3>
+                <h3>Neural Analysis</h3>
                 <div class="analysis-content"></div>
             </div>
 
             <button type="submit">
-                <span class="button-text">Upload File</span>
+                <span class="button-text">Initialize Upload</span>
                 <div class="loading-spinner"></div>
             </button>
 
@@ -306,17 +298,52 @@
                 <div class="progress-bar"></div>
             </div>
         </form>
+
+        <nav class="template-nav">
+            <h2 class="glitch">Neural Interfaces</h2>
+            <div class="nav-grid">
+                <a href="surveys/registration-form.html" class="nav-card">
+                    <h3>Neural Registration</h3>
+                    <p>Initialize your neural connection</p>
+                </a>
+                <a href="surveys/contact.html" class="nav-card">
+                    <h3>Contact Interface</h3>
+                    <p>Establish direct communication</p>
+                </a>
+                <a href="surveys/survey.html" class="nav-card">
+                    <h3>Data Collection</h3>
+                    <p>Submit neural feedback</p>
+                </a>
+            </div>
+        </nav>
     </div>
 
     <div class="notification"></div>
 
-    <nav class="template-nav">
-        <h2>Survey Templates</h2>
-        <ul>
-            <li><a href="surveys/registration-form.html">Registration Form</a></li>
-            <li><a href="surveys/contact.html">Contact Form</a></li>
-        </ul>
-    </nav>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <p>Advanced neural interface system with real-time analysis and secure data transmission.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Neural.Link: support@neural.net</p>
+                <p>Emergency: (555) NET-HELP</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="/privacy">Privacy Protocol</a></li>
+                    <li><a href="/terms">Neural Terms</a></li>
+                    <li><a href="/help">Support Hub</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Neural Interface Hub. All rights secured.</p>
+        </div>
+    </footer>
 
     <script>
         // Theme Switching
@@ -362,30 +389,27 @@
         function analyzeFile(file) {
             const analysis = [];
             
-            // Basic file information
-            analysis.push(['File Name', file.name]);
-            analysis.push(['File Size', formatBytes(file.size)]);
-            analysis.push(['File Type', file.type || 'Unknown']);
+            analysis.push(['Data Packet', file.name]);
+            analysis.push(['Packet Size', formatBytes(file.size)]);
+            analysis.push(['Data Type', file.type || 'Unknown']);
             analysis.push(['Last Modified', new Date(file.lastModified).toLocaleString()]);
 
-            // File type verification
             const fileExtension = file.name.split('.').pop().toLowerCase();
-            const commonExtensions = {
-                images: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-                documents: ['pdf', 'doc', 'docx', 'txt'],
-                archives: ['zip', 'rar', '7z']
+            const dataTypes = {
+                neural: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+                docs: ['pdf', 'doc', 'docx', 'txt'],
+                archive: ['zip', 'rar', '7z']
             };
 
-            let fileCategory = 'Other';
-            for (const [category, extensions] of Object.entries(commonExtensions)) {
+            let dataCategory = 'Unknown';
+            for (const [category, extensions] of Object.entries(dataTypes)) {
                 if (extensions.includes(fileExtension)) {
-                    fileCategory = category.charAt(0).toUpperCase() + category.slice(1);
+                    dataCategory = category.charAt(0).toUpperCase() + category.slice(1);
                     break;
                 }
             }
-            analysis.push(['File Category', fileCategory]);
+            analysis.push(['Data Category', dataCategory]);
 
-            // Display analysis
             analysisContent.innerHTML = analysis
                 .map(([key, value]) => `
                     <div class="analysis-item">
@@ -427,7 +451,7 @@
         });
 
         function updateFileInfo(file) {
-            fileInfo.textContent = `Selected file: ${file.name} (${formatBytes(file.size)})`;
+            fileInfo.textContent = `Selected data packet: ${file.name} (${formatBytes(file.size)})`;
         }
 
         fileInput.addEventListener('change', (e) => {
@@ -447,28 +471,26 @@
             const progressContainer = document.querySelector('.progress-container');
             const progressBar = document.querySelector('.progress-bar');
 
-            // Validation
             const file = fileInput.files[0];
             if (!file) {
-                showNotification('Please select a file to upload', 'error');
+                showNotification('Please select a data packet', 'error');
                 return;
             }
 
-            const maxSize = 5 * 1024 * 1024; // 5MB
+            const maxSize = 5 * 1024 * 1024;
             if (file.size > maxSize) {
-                showNotification('File size must be less than 5MB', 'error');
+                showNotification('Data packet exceeds maximum size of 5MB', 'error');
                 return;
             }
 
-            // Start upload
             submitButton.disabled = true;
-            buttonText.style.opacity = '0';
+            buttonText.textContent = 'INITIALIZING UPLOAD...';
+            buttonText.classList.add('glitch');
             spinner.style.display = 'block';
             progressContainer.style.display = 'block';
             
             try {
                 const formData = new FormData(form);
-                formData.append('csrf_token', '{{ csrf_token() }}');
                 
                 const response = await fetch('http://localhost:3000/api/upload', {
                     method: 'POST',
@@ -476,29 +498,19 @@
                 });
 
                 if (response.ok) {
-                    const result = await response.json();
-                    showNotification('File uploaded successfully!', 'success');
+                    showNotification('Neural upload complete!', 'success');
                     form.reset();
                     fileInfo.textContent = '';
                     analysisSection.style.display = 'none';
-
-                    // Refresh the file list
-                    const fileListResponse = await fetch('http://localhost:3000/api/files');
-                    if (fileListResponse.ok) {
-                        const files = await fileListResponse.json();
-                        // Update UI with new file list
-                        updateFileListUI(files);
-                    }
-                    await loadFileList();
                 } else {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Upload failed');
+                    throw new Error('Upload failed');
                 }
             } catch (error) {
-                showNotification(error.message, 'error');
+                showNotification('Neural link error: ' + error.message, 'error');
             } finally {
                 submitButton.disabled = false;
-                buttonText.style.opacity = '1';
+                buttonText.textContent = 'Initialize Upload';
+                buttonText.classList.remove('glitch');
                 spinner.style.display = 'none';
                 
                 setTimeout(() => {
@@ -507,52 +519,6 @@
                 }, 1000);
             }
         });
-
-        // Function to update file list UI
-        function updateFileListUI(files) {
-            const fileList = document.querySelector('.file-list');
-            if (!fileList) {
-                const list = document.createElement('div');
-                list.className = 'file-list';
-                document.querySelector('.container').appendChild(list);
-            }
-            fileList.innerHTML = '';
-            files.forEach(file => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <span>${file.name}</span>
-                    <span>${formatBytes(file.size)}</span>
-                    <span>${new Date(file.uploadDate).toLocaleDateString()}</span>
-                `;
-                fileList.appendChild(fileItem);
-            });
-        }
     </script>
-
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>About</h3>
-                <p>Advanced file upload system with real-time analysis and progress tracking.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p>Email: support@example.com</p>
-                <p>Phone: (555) 123-4567</p>
-            </div>
-            <div class="footer-section">
-                <h3>Links</h3>
-                <ul>
-                    <li><a href="/privacy">Privacy Policy</a></li>
-                    <li><a href="/terms">Terms of Service</a></li>
-                    <li><a href="/help">Help Center</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 File Upload System. All rights reserved.</p>
-        </div>
-    </footer>
 </body>
 </html>
