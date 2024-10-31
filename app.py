@@ -125,13 +125,14 @@ def help():
     return render_template('help.html')
 
 # Survey Routes
-@app.route('/surveys/<category>')
-def survey(category):
+@app.route('/surveys/<path>')
+def survey(path):
     try:
-        return render_template(f'surveys/{category}.html')
+        template_path = f"surveys/{path}"
+        return render_template(template_path)
     except Exception as e:
-        app.logger.error(f"Error in survey route: {str(e)}")
-        return str(e), 500
+        app.logger.error(f"Error in survey route: {template_path}")
+        return "Template not found", 404
 
 # Error handlers
 @app.errorhandler(404)
