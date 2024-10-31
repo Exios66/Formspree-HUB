@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced File Upload System</title>
+    <style>
+        :root {
+            /* Default theme */
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --background: #f5f5f5;
+            --surface: #ffffff;
+            --text: #2c3e50;
+            --error: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f1c40f;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #5dabdf;
+            --primary-dark: #4a94c6;
+            --background: #1a1a1a;
+            --surface: #2d2d2d;
+            --text: #ffffff;
+            --error: #ff6b6b;
+            --success: #51cf66;
+            --warning: #ffd43b;
+        }
+
+        [data-theme="nature"] {
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --background: #E8F5E9;
+            --surface: #ffffff;
+            --text: #1B5E20;
+            --error: #f44336;
+            --success: #66BB6A;
+            --warning: #FFA000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: var(--surface);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .theme-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.2s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        input[type="email"] {
+            padding: 12px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--surface);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-container {
+            position: relative;
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-container.drag-over {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-color: var(--primary-dark);
+        }
+
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .file-info {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: var(--primary-color);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background-color: var(--success);
+        }
+
+        .notification.error {
+            background-color: var(--error);
+        }
+
+        .notification.warning {
+            background-color: var(--warning);
+        }
+
+        .file-analysis {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: rgba(52, 152, 219, 0.1);
+            display: none;
+        }
+
+        .analysis-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            .theme-switcher {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switcher">
+        <form action="https://formspree.io/f/xnnqpjry" method="POST">
+            <button type="button" class="theme-btn" data-theme="light">Light</button>
+            <button type="button" class="theme-btn" data-theme="dark">Dark</button>
+            <button type="button" class="theme-btn" data-theme="nature">Nature</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h1>Advanced File Upload</h1>
+        <form
+            action="https://formspree.io/f/xnnqpjry"
+            method="POST"
+            enctype="multipart/form-data"
+            id="uploadForm"
+        >
+            <label>
+                Your email:
+                <input type="email" name="email" required>
+            </label>
+            
+            <div class="file-upload-container">
+                <div class="upload-icon" aria-hidden="true">📁</div>
+                <p>Drag & Drop your file here or click to browse</p>
+                <label for="file-upload" class="sr-only">Choose a file to upload</label>
+                <input type="file" name="upload" id="file-upload" class="file-input" required>
+                <div class="file-info" aria-live="polite"></div>
+            </div>
+
+            <div class="file-analysis">
+                <h3>File Analysis</h3>
+                <div class="analysis-content"></div>
+            </div>
+
+            <button type="submit">
+                <span class="button-text">Upload File</span>
+                <div class="loading-spinner"></div>
+            </button>
+
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+        </form>
+    </div>
+
+    <div class="notification"></div>
+
+    <nav class="template-nav">
+        <h2>Survey Templates</h2>
+        <ul>
+            <li><a href="surveys/registration-form.html">Registration Form</a></li>
+            <li><a href="surveys/contact.html">Contact Form</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        // Theme Switching
+        const themeSwitcher = document.querySelector('.theme-switcher');
+        themeSwitcher.addEventListener('click', (e) => {
+            if (e.target.classList.contains('theme-btn')) {
+                document.documentElement.setAttribute('data-theme', e.target.dataset.theme);
+                localStorage.setItem('theme', e.target.dataset.theme);
+            }
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // File Upload Handling
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.querySelector('.file-input');
+        const fileInfo = document.querySelector('.file-info');
+        const dropZone = document.querySelector('.file-upload-container');
+        const analysisSection = document.querySelector('.file-analysis');
+        const analysisContent = document.querySelector('.analysis-content');
+
+        function showNotification(message, type) {
+            const notification = document.querySelector('.notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function analyzeFile(file) {
+            const analysis = [];
+            
+            // Basic file information
+            analysis.push(['File Name', file.name]);
+            analysis.push(['File Size', formatBytes(file.size)]);
+            analysis.push(['File Type', file.type || 'Unknown']);
+            analysis.push(['Last Modified', new Date(file.lastModified).toLocaleString()]);
+
+            // File type verification
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            const commonExtensions = {
+                images: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+                documents: ['pdf', 'doc', 'docx', 'txt'],
+                archives: ['zip', 'rar', '7z']
+            };
+
+            let fileCategory = 'Other';
+            for (const [category, extensions] of Object.entries(commonExtensions)) {
+                if (extensions.includes(fileExtension)) {
+                    fileCategory = category.charAt(0).toUpperCase() + category.slice(1);
+                    break;
+                }
+            }
+            analysis.push(['File Category', fileCategory]);
+
+            // Display analysis
+            analysisContent.innerHTML = analysis
+                .map(([key, value]) => `
+                    <div class="analysis-item">
+                        <strong>${key}:</strong>
+                        <span>${value}</span>
+                    </div>
+                `).join('');
+            
+            analysisSection.style.display = 'block';
+        }
+
+        // Drag and drop handlers
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.add('drag-over');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.remove('drag-over');
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                fileInput.files = e.dataTransfer.files;
+                updateFileInfo(file);
+                analyzeFile(file);
+            }
+        });
+
+        function updateFileInfo(file) {
+            fileInfo.textContent = `Selected file: ${file.name} (${formatBytes(file.size)})`;
+        }
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                updateFileInfo(file);
+                analyzeFile(file);
+            }
+        });
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitButton = form.querySelector('button');
+            const buttonText = submitButton.querySelector('.button-text');
+            const spinner = submitButton.querySelector('.loading-spinner');
+            const progressContainer = document.querySelector('.progress-container');
+            const progressBar = document.querySelector('.progress-bar');
+
+            // Validation
+            const file = fileInput.files[0];
+            if (!file) {
+                showNotification('Please select a file to upload', 'error');
+                return;
+            }
+
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            if (file.size > maxSize) {
+                showNotification('File size must be less than 5MB', 'error');
+                return;
+            }
+
+            // Start upload
+            submitButton.disabled = true;
+            buttonText.style.opacity = '0';
+            spinner.style.display = 'block';
+            progressContainer.style.display = 'block';
+            
+            try {
+                const formData = new FormData(form);
+                
+                const response = await fetch('http://localhost:3000/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showNotification('File uploaded successfully!', 'success');
+                    form.reset();
+                    fileInfo.textContent = '';
+                    analysisSection.style.display = 'none';
+
+                    // Refresh the file list
+                    const fileListResponse = await fetch('http://localhost:3000/api/files');
+                    if (fileListResponse.ok) {
+                        const files = await fileListResponse.json();
+                        // Update UI with new file list
+                        updateFileListUI(files);
+                    }
+                    await loadFileList();
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Upload failed');
+                }
+            } catch (error) {
+                showNotification(error.message, 'error');
+            } finally {
+                submitButton.disabled = false;
+                buttonText.style.opacity = '1';
+                spinner.style.display = 'none';
+                
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                    progressBar.style.width = '0%';
+                }, 1000);
+            }
+        });
+
+        // Function to update file list UI
+        function updateFileListUI(files) {
+            const fileList = document.querySelector('.file-list');
+            if (!fileList) {
+                const list = document.createElement('div');
+                list.className = 'file-list';
+                document.querySelector('.container').appendChild(list);
+            }
+            fileList.innerHTML = '';
+            files.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name}</span>
+                    <span>${formatBytes(file.size)}</span>
+                    <span>${new Date(file.uploadDate).toLocaleDateString()}</span>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
+    </script>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <p>Advanced file upload system with real-time analysis and progress tracking.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: support@example.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms of Service</a></li>
+                    <li><a href="/help">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 File Upload System. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
