@@ -6,6 +6,7 @@ from datetime import datetime
 import os
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from werkzeug.utils import secure_filename
+import time
 
 # Initialize Flask
 app = Flask(__name__)
@@ -159,8 +160,15 @@ def init_db():
         app.logger.info("Database tables created")
 
 if __name__ == '__main__':
+    port = 5000  # or whatever port you're using
+    print("\n" + "=" * 50)
+    print(f"Flask server running on port {port}")
+    print(f"URL: http://localhost:{port}")
+    print("=" * 50 + "\n")
+    
+    # Keep the message visible by adding a delay
     try:
-        init_db()
-        app.run(debug=True, port=8000)
-    except Exception as e:
-        print(f"Startup error: {str(e)}")
+        app.run(debug=True, port=port)
+    except KeyboardInterrupt:
+        print("\nServer shutting down...")
+        time.sleep(2)  # Give time to read shutdown message
